@@ -6,6 +6,7 @@
 import React, { useState } from "react";
 import { useHistory } from "react-router-dom";
 import { useStateValue } from "../StateProvider";
+import { actionTypes } from "../reducer";
 
 // icons
 import SearchIcon from "@material-ui/icons/Search";
@@ -16,15 +17,22 @@ import MicIcon from "@material-ui/icons/Mic";
 import "../css/Search.css";
 import { Button } from "@material-ui/core";
 
-function Search(hideButtons = false) {
-  const { state, dispatch } = useStateValue();
+function Search({ hideButtons = false }) {
+  const [{}, dispatch] = useStateValue();
 
-  const { input, setInput } = useState("");
+  const [input, setInput] = useState("");
   const history = useHistory();
 
   const search = (e) => {
     // preventing refresh
     e.preventDefault();
+
+    dispatch({
+      type: actionTypes.SET_SEARCH_TERM,
+      term: input,
+    });
+
+    // do something with input and comeback and fix
     history.push("/search");
   };
 
@@ -32,7 +40,7 @@ function Search(hideButtons = false) {
     <form className="search">
       <div className="search__input">
         <SearchIcon className="search__inputIcon" />
-        <input value={input} onchange={(e) => setInput(e.target.value)} />
+        <input value={input} onChange={(e) => setInput(e.target.value)} />
         <MicIcon />
       </div>
 

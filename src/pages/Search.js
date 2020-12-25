@@ -18,7 +18,13 @@ import "../css/Search.css";
 import { Button } from "@material-ui/core";
 
 function Search({ hideButtons = false }) {
-  const [{}, dispatch] = useStateValue();
+
+  // state is just an arbitary reason as we need to dispatch the result
+  // we can also write it as
+  // const [{ state }, dispatch] = useStateValue();
+  // that is how the things are below
+  
+  const [{ state }, dispatch] = useStateValue();
 
   const [input, setInput] = useState("");
   const history = useHistory();
